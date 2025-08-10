@@ -1,0 +1,51 @@
+﻿@model Author
+
+<div class="row mb-3">
+    <div class="col-md-8 offset-md-2">
+        <h4>Create Author</h4>
+        <hr />
+        <form asp-action="Create" enctype="multipart/form-data" method="post">
+            <div class="form-group text-center">
+                <img class="rounded-circle" id="ProfilePicturePreview" />
+            </div>
+            <div class="mb-3">
+                <label asp-for="ProfilePicture" class="form-label"></label>
+                <input type="file" id="ProfilePictureInput" name="ProfilePicture" class="form-control" />
+                
+            </div>
+    <div class="mb-3">
+        <label asp-for="Name" class="form-label"></label>
+        <input type="text" class="form-control" asp-for="Name">
+        <span asp-validation-for="Name"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="Bio" class="form-label"></label>
+        <textarea asp-for="Bio" class="form-control"  rows="3"></textarea>
+        <span asp-validation-for="Bio"></span>
+    </div>
+ 
+  
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+</div>
+</div>
+@section Scripts{
+    <script>
+        $("#ProfilePictureInput").on("change", function () {
+            var input = this;
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $("#ProfilePicturePreview").attr("src", e.target.result).css({
+                        "max-width": "200px",
+                        "display": "block",
+                        "margin": "auto"
+                    });
+                };
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        });
+    </script>
+}

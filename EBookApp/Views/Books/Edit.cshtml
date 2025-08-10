@@ -1,0 +1,62 @@
+﻿@model Book
+
+<div class="row mb-3">
+    <div class="col-md-8 offset-md-2">
+        <h4>Update Book</h4>
+        <hr />
+        <form asp-action="Edit" enctype="multipart/form-data" method="post">
+            <div class="form-group text-center">
+                <img id="CoverImagePreview" src="@Url.Content("~/uploads/books/"+Model.CoverImage)" alt="Model.Title" style="max-width:200px;" />
+            </div>
+            <div class="mb-3">
+                <label asp-for="AuthorId" class="form-label">Author</label>
+                <select asp-for="AuthorId" class="form-select" asp-items="ViewBag.Authors">
+                    <option value="">-- Select Author --</option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label asp-for="CoverImage" class="form-label"></label>
+                <input type="file" id="CoverImageInput" name="CoverImage" class="form-control" />
+
+            </div>
+            <div class="mb-3">
+                <label asp-for="Title" class="form-label"></label>
+                <input type="text" class="form-control" asp-for="Title">
+                <span asp-validation-for="Title"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="Price" class="form-label"></label>
+                <input type="text" class="form-control" asp-for="Price">
+                <span asp-validation-for="Price"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="Description" class="form-label"></label>
+                <textarea asp-for="Description" class="form-control" rows="3"></textarea>
+                <span asp-validation-for="Description"></span>
+            </div>
+
+
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+</div>
+@section Scripts{
+    <script>
+        $("#CoverImageInput").on("change", function () {
+            var input = this;
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $("#CoverImagePreview").attr("src", e.target.result).css({
+                        "max-width": "200px",
+                        "display": "block",
+                        "margin": "auto"
+                    });
+                };
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        });
+    </script>
+}

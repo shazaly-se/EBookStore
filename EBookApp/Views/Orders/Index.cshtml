@@ -1,0 +1,51 @@
+﻿@model IEnumerable<EBookApp.Models.Order>
+
+<h2>Your Orders</h2>
+
+@if (!Model.Any())
+{
+    <p>You have no orders.</p>
+}
+else
+{
+    foreach (var order in Model)
+    {
+        <div class="card ">
+            <div class="card-header">
+                <strong>Order Date:</strong> @order.OrderDate.ToString("dd MMM yyyy")
+                <span class="float-end"><strong>Total:</strong> @order.TotalAmount AED</span>
+            </div>
+            <div class="card-body">
+                <table class="table ">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>Book</th>
+                            <th>Price</th>
+                            <th>Quantity</th>
+                            <th>Subtotal</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in order.Items)
+                        {
+                            <tr>
+                                <td>
+                                    <img src="@Url.Content("~/uploads/books/" + item.Book.CoverImage)"
+                             alt="@item.Book.Title"
+                             class="img-fluid rounded"
+                             style="height: 100px; width: auto; display: block; margin: auto;" />
+
+                                </td>
+                                <td>@item.Book.Title</td>
+                                <td>@item.Price</td>
+                                <td>@item.Quantity</td>
+                                <td>@(item.Price * item.Quantity)</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    }
+}
